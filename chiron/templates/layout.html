@@ -4,18 +4,8 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
 <link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">
 <div class="container">
-{#    <div class="navbar navbar-inverse">#}
-{#         <ul class="nav navbar-nav">#}
-{#            {% if current_user.is_authenticated %}#}
-{#                <li role="presentation"><a href="{{ url_for('logout') }}">Logout</a></li>#}
-{#            {% else %}#}
-{#                <li role="presentation"><a href="{{ url_for('login') }}">Login</a></li>#}
-{#            {% endif %}#}
-{#         </ul>#}
-{#    </div>#}
 <nav class="navbar navbar-inverse">
-        <div class="container">
-          <div class="navbar-header">
+        <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
               <span class="sr-only">Toggle navigation</span>
               <span class="icon-bar"></span>
@@ -33,10 +23,8 @@
             {% endif %}
             </ul>
           </div><!--/.nav-collapse -->
-        </div>
       </nav>
-    <div class="container" id="content">
-        <div id="messages">
+    <div id="messages">
                 {% with messages = get_flashed_messages() %}
                 {% if messages %}
                     {% for message in messages %}
@@ -51,5 +39,4 @@
             </div>
 
         {% block body %}{% endblock %}
-    </div>
 </div>

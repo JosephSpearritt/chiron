@@ -3,15 +3,21 @@
 {% block body %}
     <h1>Sick Leave Requests</h1>
     {% for req in reqs %}
-        <div class="leaverequest">
-            <h3>Request: Employee {{ req.employee_id }}</h3>
-            <ul class="leaveinfo">
-                <li>Date: {{ req.date }}</li>
-                <li>Phone number: {{ req.employee_phone }}</li>
-                <li>Reason for Request: {{ req.leave_reason }}</li>
-            </ul>
-        </div>
-        <a class="btn btn-success" href="{{ url_for('approve_request', reqid=req.id) }}">Approve</a>
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title">Request: {{ req.employee_name }} (#{{ req.employee_id }})</h3>
+          </div>
+          <div class="panel-body">
+            <div class="list-group">
+                <div class="list-group-item"><div class="bigtxt"><span class="label label-default">Date</span> {{ req.date }}</div></div>
+                <div class="list-group-item"><div div class="bigtxt"><span class="label label-default">Phone Number</span> {{ req.employee_phone }}</div></div>
+                <div class="list-group-item"><div div class="bigtxt"><span class="label label-default">Reason for Request</span> {{ req.leave_reason }}</div></div>
+            </div>
+          </div>
+        <div class="panel-footer">
+            <a class="btn btn-success" href="{{ url_for('approve_request', reqid=req.id) }}">Approve</a>
         <a class="btn btn-danger" href="{{ url_for('deny_request', reqid=req.id) }}">Deny</a>
+          </div>
+        </div>
     {% endfor %}
 {% endblock %}
