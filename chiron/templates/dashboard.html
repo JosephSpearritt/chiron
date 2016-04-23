@@ -1,5 +1,14 @@
 <!DOCTYPE html>
 {% extends "layout.html" %}
 {% block body %}
-    Index page!
+    {% for req in reqs %}
+        <div class="leaverequest">
+            <h3>Request: Employee {{ req.employee_id }}</h3>
+            <ul class="leaveinfo">
+                <li>Date: {{ req.date }}</li>
+                <li>Phone number: {{ req.employee_phone }}</li>
+                <li>Reason for Request: {{ req.leave_reason }}</li>
+            </ul>
+        </div>
+    {% endfor %}
 {% endblock %}

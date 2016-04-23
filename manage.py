@@ -7,8 +7,9 @@
 
 """
 
-from chiron.models import User
+from chiron.models import *
 from flask_script import Manager
+import datetime
 
 from chiron import app, db
 
@@ -38,6 +39,9 @@ def make_dummy_users():
     """
     dummyuser = User('Bob', 'iamanurse')
     db.session.add(dummyuser)
+    db.session.commit()
+    dummyrequest = LeaveRequest(1234, "0412345678", "I feel bad lol", date=datetime.date.today())
+    db.session.add(dummyrequest)
     db.session.commit()
 
 

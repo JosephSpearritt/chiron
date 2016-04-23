@@ -28,7 +28,8 @@ def index():
 @app.route('/dashboard')
 @login_required
 def dashboard():
-    return render_template('dashboard.html')
+    reqs = LeaveRequest.query.filter_by(status=0).all()
+    return render_template('dashboard.html', reqs=reqs)
 
 
 @app.route('/login', methods=['GET', 'POST'])

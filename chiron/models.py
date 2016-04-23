@@ -41,13 +41,13 @@ class LeaveRequest(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     employee_id = db.Column(db.Integer)
     employee_phone = db.Column(db.String)
+    date = db.Column(db.Date)
     leave_reason = db.Column(db.String)
     status = db.Column(db.Integer)
-    comments = db.Column(db.String)
 
-    def __init__(self, employee_id, employee_phone="None", leave_reason="No Reason", status=0, comments=""):
+    def __init__(self, employee_id, employee_phone="None", leave_reason="No Reason", date=None, status=0):
         self.employee_id = employee_id
         self.employee_phone = employee_phone
         self.leave_reason = leave_reason
+        self.date = date
         self.status = status
-        self.comments = comments
