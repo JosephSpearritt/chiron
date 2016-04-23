@@ -1,24 +1,30 @@
-import json
+"""
+    Functions for Tanda related behaviour.
+"""
 
-from .oauth import *
-import re
-from chiron.models import *
 import datetime
+import re
+
+import twilio
+
+from .models import *
+from .oauth import *
+
+from .app import app
+TANDA_TOKEN = "6b14f827a74ba300a8929bba04ec282b632983b96c3b2228ec865f16b7977a2f"
 
 
-TANDA_TOKEN =  "6b14f827a74ba300a8929bba04ec282b632983b96c3b2228ec865f16b7977a2f"
+def receive_text(ph_num, text):
+    text_data = decipher_text(text)
 
-
-def receive_text(no, text):
-    dtext = decipher_text(text)
-    if dtext == 0:
-        send_how_to(no)
+    if text_data == 0:
+        send_how_to(ph_num)
         return
-    user = find_employee(dtext['id'],no,dtext['name'],dtext['email'])
-    if not user :
-        send_how_to(no)
+    user = find_employee(text_data['id'], ph_num, text_data['name'], text_data['email'])
+    if not user:
+        send_how_to(ph_num)
         return
-    register_illness(no, user)
+    register_illness(ph_num, user)
     return "worked"
 
 
@@ -42,27 +48,36 @@ def decipher_text(text):
     return {'name': words[0] + " " + words[1], 'id': words[2], 'email': words[3], 'reason': words[4:]}
 
 
-def register_illness(no,text):
-    request = LeaveRequest(text['id'], text['name'], no, text['reason'], date=datetime.date.today())
+def register_illness(ph_num, text):
+    request = LeaveRequest(text['id'], text['name'], ph_num, text['reason'], date=datetime.date.today())
     db.session.add(request)
     db.session.commit()
     return
 
-"""
-All has failed, ask them to send back info
-"""
-def send_how_to(no):
-    text = "Please text as follows. Name, ID, Email, Reason. Type 0 when you are not sure Example: Sam Brown 0 sam@sam.com I'm sick"
-    pass
 
+def send_how_to(ph_num):
+    """
+    All has failed, ask them to send back info
+    """
+    text = (
+        "Please text as follows:"
+        "  Name, ID, Email, Reason."
+        "  Type 0 when you are not sure"
+        "  Example: Sam Brown 0 sam@sam.com I'm sick"
+    )
 
-def send_received(no):
-    text = "Your message has been received and logged. We will get back to you ASAP with a response."
-    pass
+    from twilio.rest import TwilioRestClient
+
+    client = TwilioRestClient(app.config['TWILIO_SID'], app.config['TWILIO_TOKEN'])
+    client.messages.create(
+        to=ph_num,
+        from_=app.config['TWILIO_NUMBER'],
+        body=text,
+    )
 
 
 def get_users():
-    return get("users?show_wages=false",TANDA_TOKEN).json()
+    return get("users?show_wages=false", app.config['TANDA_TOKEN']).json()
 
 
 def confirm_employee(id, no, name, email, user):
@@ -84,7 +99,7 @@ def confirm_employee(id, no, name, email, user):
 
 
 def find_employee(id, no, name, email):
-    #search what we may have
+    # Search what we may have
     for user in get_users():
 
         if str(user['name']) == name:
@@ -104,7 +119,5 @@ def find_employee(id, no, name, email):
                 return user
             continue
 
-    #found nothing
+    # Found nothing
     return
-
-print(receive_text("0412744217","Sam Brown 123977 windyce@gmail.com sick"))
