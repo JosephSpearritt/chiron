@@ -48,6 +48,8 @@ def receive_sms():
     Endpoint for twillio to send received texts to.
     :return:
     """
+    app.logger.warning('TEXT: RECIEVED FROM: %s', request.values['From'])
+
     app.logger.info(request.values)
     with open('texts.txt', 'a') as fh:
         fh.write('{}: {}\n\n'.format(datetime.now().isoformat(), str(dict(request.values.items()))))
@@ -61,7 +63,7 @@ def receive_sms():
         sms_dictionary[key.lower()] = request.values[key]
 
     # SAM: SMS keys are 'from', 'body', and are both strings
-    receive_text(sms_dictionary['from'], sms_dictionary['body'])
+    # receive_text(sms_dictionary['from'], sms_dictionary['body'])
 
     return jsonify(sms_dictionary)
 
