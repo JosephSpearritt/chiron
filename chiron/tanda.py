@@ -5,12 +5,13 @@
 import datetime
 import re
 
-import twilio
+from twilio.rest import TwilioRestClient
 
 from .models import *
 from .oauth import *
 
 from .app import app
+
 TANDA_TOKEN = "6b14f827a74ba300a8929bba04ec282b632983b96c3b2228ec865f16b7977a2f"
 
 
@@ -76,6 +77,7 @@ def send_how_to(ph_num):
         body=text,
     )
 
+
 def send_recieved(ph_num):
     """
     All has worked, send back success
@@ -84,14 +86,13 @@ def send_recieved(ph_num):
         "Your sick leave request has been successful. We are reviewing it now"
     )
 
-    from twilio.rest import TwilioRestClient
-
     client = TwilioRestClient(app.config['TWILIO_SID'], app.config['TWILIO_TOKEN'])
     client.messages.create(
         to=ph_num,
         from_=app.config['TWILIO_NUMBER'],
         body=text,
     )
+
 
 def get_users():
     return get("users?show_wages=false", app.config['TANDA_TOKEN']).json()
