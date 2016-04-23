@@ -19,6 +19,15 @@ def index():
     """
     Base route for the website.
     """
+    if current_user.is_authenticated:
+        return redirect(url_for('dashboard'))
+    else:
+        return redirect(url_for('login'))
+
+
+@app.route('/dashboard')
+@login_required
+def dashboard():
     return render_template('dashboard.html')
 
 
@@ -50,6 +59,7 @@ def login():
 @app.route('/logout')
 def logout():
     logout_user()
+    flash('Logged out!')
     return redirect(url_for('index'))
 
 
