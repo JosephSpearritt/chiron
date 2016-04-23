@@ -1,27 +1,33 @@
 <!DOCTYPE html>
 <title>Chiron!</title>
-<link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">
-<div id="navbar">
-    {% if current_user.is_authenticated %}
-        <li class="nav_right"><a href="{{ url_for('logout') }}">Logout</a></li>
-    {% else %}
-        <li class="nav_right"><a href="{{ url_for('login') }}">Login</a></li>
-    {% endif %}
-</div>
-<div id="content">
-    <div id="messages">
-            {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="row">
-                        <div class="alert alert-info" role="alert">{{ message }}</div>
-                    </div>
-                {% endfor %}
+<!--<link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">-->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+<div class="page">
+    <div class="nav">
+        <ul class="nav nav-pills">
+        {% if current_user.is_authenticated %}
+            <li role="presentation"><a href="{{ url_for('logout') }}">Logout</a></li>
+        {% else %}
+            <li role="presentation"><a href="{{ url_for('login') }}">Login</a></li>
+        {% endif %}
+        </ul>
+    </div>
+    <div class="container" id="content">
+        <div id="messages">
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div>
+                            <div class="alert alert-info" role="alert">{{ message }}</div>
+                        </div>
+                    {% endfor %}
 
-                <hr />
-            {% endif %}
-        {% endwith %}
-        </div>
+                    <hr />
+                {% endif %}
+            {% endwith %}
+            </div>
 
-    {% block body %}{% endblock %}
+        {% block body %}{% endblock %}
+    </div>
 </div>

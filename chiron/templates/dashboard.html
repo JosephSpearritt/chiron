@@ -10,11 +10,7 @@
                 <li>Reason for Request: {{ req.leave_reason }}</li>
             </ul>
         </div>
-        <form class="approveform" action="{{ url_for('approve_request', reqid=req.id) }}" method=post>
-            <input type="submit" value="Approve"/>
-        </form>
-        <form class="denyform" action="{{ url_for('deny_request', reqid=req.id) }}" method=post>
-            <input type="submit" value="Deny"/>
-        </form>
+        <a class="btn btn-success" href="{{ url_for('approve_request', reqid=req.id) }}">Approve</a>
+        <a class="btn btn-danger" href="{{ url_for('deny_request', reqid=req.id) }}">Deny</a>
     {% endfor %}
 {% endblock %}

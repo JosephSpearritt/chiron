@@ -32,7 +32,7 @@ def dashboard():
     return render_template('dashboard.html', reqs=reqs)
 
 
-@app.route('/approve/<reqid>', methods=['POST'])
+@app.route('/approve/<reqid>', methods=['GET'])
 @login_required
 def approve_request(reqid):
     req = LeaveRequest.query.filter_by(id=reqid).first()
@@ -47,7 +47,7 @@ def approve_request(reqid):
     return redirect(url_for('dashboard'))
 
 
-@app.route('/deny/<reqid>', methods=['POST'])
+@app.route('/deny/<reqid>', methods=['GET'])
 @login_required
 def deny_request(reqid):
     req = LeaveRequest.query.filter_by(id=reqid).first()
