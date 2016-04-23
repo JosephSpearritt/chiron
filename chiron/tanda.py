@@ -19,7 +19,7 @@ def receive_text(no, text):
     if not user :
         send_how_to(no)
         return
-    #register_illness(no, user)
+    register_illness(no, user)
     return "worked"
 
 
