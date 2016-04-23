@@ -32,6 +32,33 @@ def dashboard():
     return render_template('dashboard.html', reqs=reqs)
 
 
+@app.route('/approve/<reqid>', methods=['POST'])
+@login_required
+def approve_request(reqid):
+    req = LeaveRequest.query.filter_by(id=reqid).first()
+    if req is None:
+        flash('Request not found')
+        return redirect(url_for('dashboard'))
+    req.status = 1
+    db.session.commit()
+
+    # DO TANDA STUFF
+
+    return redirect(url_for('dashboard'))
+
+
+@app.route('/deny/<reqid>', methods=['POST'])
+@login_required
+def deny_request(reqid):
+    req = LeaveRequest.query.filter_by(id=reqid).first()
+    if req is None:
+        flash('Request not found')
+        return redirect(url_for('dashboard'))
+    req.status = -1
+    db.session.commit()
+    return redirect(url_for('dashboard'))
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':

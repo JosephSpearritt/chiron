@@ -41,7 +41,9 @@ def make_dummy_users():
     db.session.add(dummyuser)
     db.session.commit()
     dummyrequest = LeaveRequest(1234, "0412345678", "I feel bad lol", date=datetime.date.today())
+    dummyrequest2 = LeaveRequest(5678, "01189998819991197253", "Can i like go fishing it's so nice out pls", date=datetime.date.today())
     db.session.add(dummyrequest)
+    db.session.add(dummyrequest2)
     db.session.commit()
 
 
