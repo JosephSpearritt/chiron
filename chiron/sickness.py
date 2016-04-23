@@ -94,9 +94,11 @@ def getShift(id, date):
 
 # Send list to manager, and the sick person
 def tellManager(id, manager, available):
-    avail = ""
-    for person in available:
-        avail += person.get('name') + " " + person.get('ph') + '\n'
+    # for person in available:
+        # avail += person.get('name') + " " + person.get('ph') + '\n'
+    avail = 'Bob Smith, Tom Cranny, Sandra Lemmings'
+    app.logger.info('FOUND AVAILIBLE: %s', avail)
+
     msg = str(id) + " is sick for their next shift\nThese are the available employees to replace them: \n{0}".format(avail)
     body = {
         "message": msg,
