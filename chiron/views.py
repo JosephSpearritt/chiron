@@ -50,9 +50,6 @@ def receive_sms():
     """
     app.logger.warning('TEXT: RECIEVED FROM: %s', request.values['From'])
 
-    # with open('texts.txt', 'a') as fh:
-    #     fh.write('{}: {}\n\n'.format(datetime.now().isoformat(), str(dict(request.values.items()))))
-
     # Populate a dictionary with sms data.
     keys = ['Body', 'From']
     sms_dictionary = {}
@@ -64,7 +61,7 @@ def receive_sms():
     app.logger.warning("TEXT: CREATED SMS DICT: %s", str(sms_dictionary))
 
     # SAM: SMS keys are 'from', 'body', and are both strings
-    receive_text(sms_dictionary['from'], sms_dictionary['body'])
+    receive_text(str(sms_dictionary['from']), str(sms_dictionary['body']))
 
     return jsonify(sms_dictionary)
 
