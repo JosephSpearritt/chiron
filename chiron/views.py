@@ -66,7 +66,7 @@ def receive_sms():
     # SAM: SMS keys are 'from', 'body', and are both strings
     receive_text(sms_dictionary['from'], sms_dictionary['body'])
 
-    # return jsonify(sms_dictionary)
+    return jsonify(sms_dictionary)
 
 
 @app.route('/approve/<reqid>', methods=['GET'])
