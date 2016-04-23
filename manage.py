@@ -25,6 +25,20 @@ def run_debug():
 
 
 @manager.command
+def run():
+    """
+    Run through a CherryPy Server.
+    :return:
+    """
+    from cherrypy import wsgiserver
+    d = wsgiserver.WSGIPathInfoDispatcher({'/': app})
+    server = wsgiserver.CherryPyWSGIServer(('0.0.0.0', 80), d)
+    try:
+        server.start()
+    except KeyboardInterrupt:
+        server.stop()
+
+@manager.command
 def initdb():
     """
     Setup the database
