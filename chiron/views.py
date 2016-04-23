@@ -22,6 +22,7 @@ from .app import login_manager
 from .models import *
 from .tanda import receive_text
 
+
 @app.route('/')
 def index():
     """
