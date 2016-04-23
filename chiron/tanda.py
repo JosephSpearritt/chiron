@@ -25,6 +25,7 @@ def receive_text(ph_num, text):
         send_how_to(ph_num)
         return
     register_illness(ph_num, user)
+    send_recieved(ph_num)
     return "worked"
 
 
