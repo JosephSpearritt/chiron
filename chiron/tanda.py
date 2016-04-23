@@ -107,4 +107,3 @@ def find_employee(id, no, name, email):
     #found nothing
     return
 
-print(receive_text("0412744217","Sam Brown 123977 windyce@gmail.com sick"))
