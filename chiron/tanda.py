@@ -50,7 +50,7 @@ def decipher_text(text):
 
 
 def register_illness(ph_num, text):
-    request = LeaveRequest(int(text['id']), text['name'], ph_num, text['reason'], date=datetime.date.today())
+    request = LeaveRequest(int(text['id']), text['name'], ph_num, " ".join(str(x) for x in text['reason']), date=datetime.date.today())
     db.session.add(request)
     db.session.commit()
     return
