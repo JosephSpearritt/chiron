@@ -6,7 +6,7 @@
 
 """
 
-from flask import render_template, request, redirect, url_for, flash
+from flask import render_template, request, redirect, url_for, flash, jsonify
 from flask.ext.login import login_required, login_user, logout_user, current_user
 
 from . import app
@@ -32,10 +32,13 @@ def dashboard():
     return render_template('dashboard.html', reqs=reqs)
 
 
-@app.route('/receivesms')
+@app.route('/receivesms', methods=['POST'])
 def receive_sms():
-    # GET SMS
-    return '200 OK'
+    """
+    Endpoint for twillio to send received texts to.
+    :return:
+    """
+    return jsonify(request.values.items())
 
 
 @app.route('/approve/<reqid>', methods=['GET'])
