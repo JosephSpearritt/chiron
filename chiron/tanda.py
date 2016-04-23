@@ -1,33 +1,60 @@
 import json
 
 from .oauth import *
+import re
+from chiron.models import *
+from flask_script import Manager
+import datetime
 
 
 TANDA_TOKEN =  "6b14f827a74ba300a8929bba04ec282b632983b96c3b2228ec865f16b7977a2f"
 
 
-def recieve_text(no, text):
+def receive_text(no, text):
     dtext = decipher_text(text)
     print(dtext)
     if dtext == 0:
         send_how_to()
         return
     id = find_employee(dtext['id'],no,dtext['name'],dtext['email'])
+    if id == 0:
+        send_how_to()
+        return
+
     return id
+
+
+def check_not_email(email):
+    if re.search(".*@.*", email):
+        return False
+    return True
 
 
 def decipher_text(text):
     words = text.split()
-    if len(words) < 5:
+    if len(words) < 4:
         return 0
+
+    if not words[2].isdigit():
+        return 0
+
+    if check_not_email(words[3]):
+        return {'name': words[0] + " " + words[1], 'id': words[2], 'email': '0', 'reason': words[3:]}
+
     return {'name': words[0] + " " + words[1], 'id': words[2], 'email': words[3], 'reason': words[4:]}
 
+
+def register_illness(no,text):
+    request = LeaveRequest(text['id'], no, text['reason'], date=datetime.date.today())
+    db.session.add(request)
+    db.session.commit()
+    return
 
 """
 All has failed, ask them to send back info
 """
-def send_how_to():
-
+def send_how_to(no):
+    text = "Please text as follows. Name, ID, Email, Reason. Type 0 when you are not sure Example: Sam Brown 0 sam@sam.com I'm sick"
     pass
 
 
@@ -35,7 +62,7 @@ def get_users():
     return get("users?show_wages=false",TANDA_TOKEN).json()
 
 
-def find_employee(id, no, name,email):
+def find_employee(id, no, name, email):
     if id == str(123977):
         print("matched")
     #search what we may have
@@ -54,4 +81,4 @@ def find_employee(id, no, name,email):
     #found nothing
     return
 
-print(recieve_text("0412744217","Sam Brown 123977 windyce@gmail.com sick"))
+print(receive_text("0412744217","Sam Brown 123977 windyce@gmail.com sick"))
