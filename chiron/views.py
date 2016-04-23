@@ -51,3 +51,11 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
+
+@login_manager.user_loader
+def user_loader(user_id):
+    user = User.query.filter_by(id=user_id)
+    if user.count() == 1:
+        return user.one()
+    return None
