@@ -3,7 +3,6 @@ import json
 from .oauth import *
 import re
 from chiron.models import *
-from flask_script import Manager
 import datetime
 
 
@@ -14,14 +13,14 @@ def receive_text(no, text):
     dtext = decipher_text(text)
     print(dtext)
     if dtext == 0:
-        send_how_to()
+        send_how_to(no)
         return
-    id = find_employee(dtext['id'],no,dtext['name'],dtext['email'])
-    if id == 0:
-        send_how_to()
+    user = find_employee(dtext['id'],no,dtext['name'],dtext['email'])
+    if not user :
+        send_how_to(no)
         return
-
-    return id
+    register_illness(no, user)
+    return "worked"
 
 
 def check_not_email(email):
@@ -45,7 +44,7 @@ def decipher_text(text):
 
 
 def register_illness(no,text):
-    request = LeaveRequest(text['id'], no, text['reason'], date=datetime.date.today())
+    request = LeaveRequest(text['id'], text['name'], no, text['reason'], date=datetime.date.today())
     db.session.add(request)
     db.session.commit()
     return
@@ -62,21 +61,44 @@ def get_users():
     return get("users?show_wages=false",TANDA_TOKEN).json()
 
 
+def confirm_employee(id, no, name, email, user):
+    count = 0
+
+    if str(user['name']) == name:
+        count += 1
+    if str(user['id']) == id:
+        count += 1
+    if str(user['phone']) == no:
+        count += 1
+    if str(user['email']) == email:
+        count += 1
+
+    if count >= 2:
+        return True
+
+    return False
+
+
 def find_employee(id, no, name, email):
-    if id == str(123977):
-        print("matched")
     #search what we may have
     for user in get_users():
-        print(user['id'])
 
         if str(user['name']) == name:
-            return user['id']
+            if confirm_employee(id, no, name, email, user):
+                return user
+            continue
         if str(user['id']) == id:
-            return id
+            if confirm_employee(id, no, name, email, user):
+                return user
+            continue
         if str(user['phone']) == no:
-            return user['id']
+            if confirm_employee(id, no, name, email, user):
+                return user
+            continue
         if str(user['email']) == email:
-            return user['id']
+            if confirm_employee(id, no, name, email, user):
+                return user
+            continue
 
     #found nothing
     return

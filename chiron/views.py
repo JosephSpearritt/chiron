@@ -8,13 +8,19 @@
 
 from datetime import datetime
 
-from flask import render_template, request, redirect, url_for, flash, jsonify
+from flask import (render_template,
+                   request, redirect,
+                   url_for,
+                   flash,
+                   jsonify,
+                   abort,
+                   )
 from flask.ext.login import login_required, login_user, logout_user, current_user
 
 from . import app
 from .app import login_manager
 from .models import *
-
+from .tanda import receive_text
 
 @app.route('/')
 def index():
@@ -44,7 +50,18 @@ def receive_sms():
     with open('texts.txt', 'a') as fh:
         fh.write('{}: {}\n\n'.format(datetime.now().isoformat(), str(dict(request.values.items()))))
 
-    return jsonify(request.values.items())
+    # Populate a dictionary with sms data.
+    keys = ['Body', 'From']
+    sms_dictionary = {}
+    for key in keys:
+        if not request.values.get(key):
+            return abort(400)
+        sms_dictionary[key.lower()] = request.values[key]
+
+    # SAM: SMS keys are 'from', 'body', and are both strings
+    receive_text(sms_dictionary['from'], sms_dictionary['body'])
+
+    return jsonify(sms_dictionary)
 
 
 @app.route('/approve/<reqid>', methods=['GET'])
