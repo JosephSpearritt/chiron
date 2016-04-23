@@ -8,4 +8,5 @@
 from chiron import app as application
 
 
+application.debug = True
 application.run()
