@@ -36,7 +36,7 @@ def initialise_settings():
     settings_file = instance / 'settings.py'
     if not settings_file.exists():
         with settings_file.open('w') as fh_out:
-            fh_out.write('SECRET_KEY = "{}"\n'.format(binascii.hexlify(os.urandom(64))))
+            fh_out.write('SECRET_KEY = "{}"\n'.format(binascii.hexlify(os.urandom(64)).decode()))
 
             fh_out.write('#TWILLIO_SID = "{}"\n')
             fh_out.write('#TWILLIO_TOKEN = "{}"\n')
