@@ -4,14 +4,14 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
 <div class="page">
-    <div class="nav">
-        <ul class="nav nav-pills">
-        {% if current_user.is_authenticated %}
-            <li role="presentation"><a href="{{ url_for('logout') }}">Logout</a></li>
-        {% else %}
-            <li role="presentation"><a href="{{ url_for('login') }}">Login</a></li>
-        {% endif %}
-        </ul>
+    <div class="navbar navbar-inverse">
+         <ul class="nav navbar-nav">
+            {% if current_user.is_authenticated %}
+                <li role="presentation"><a href="{{ url_for('logout') }}">Logout</a></li>
+            {% else %}
+                <li role="presentation"><a href="{{ url_for('login') }}">Login</a></li>
+            {% endif %}
+         </ul>
     </div>
     <div class="container" id="content">
         <div id="messages">

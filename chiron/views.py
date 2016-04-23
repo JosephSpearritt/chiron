@@ -32,6 +32,12 @@ def dashboard():
     return render_template('dashboard.html', reqs=reqs)
 
 
+@app.route('/receivesms')
+def receive_sms():
+    # GET SMS
+    return '200 OK'
+
+
 @app.route('/approve/<reqid>', methods=['GET'])
 @login_required
 def approve_request(reqid):

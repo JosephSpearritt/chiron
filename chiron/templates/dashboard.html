@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 {% extends "layout.html" %}
 {% block body %}
+    <h1>Sick Leave Requests</h1>
     {% for req in reqs %}
         <div class="leaverequest">
             <h3>Request: Employee {{ req.employee_id }}</h3>
