@@ -12,8 +12,6 @@ from .oauth import *
 
 from .app import app
 
-TANDA_TOKEN = "6b14f827a74ba300a8929bba04ec282b632983b96c3b2228ec865f16b7977a2f"
-
 
 def receive_text(ph_num, text):
     text_data = decipher_text(text)
