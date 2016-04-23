@@ -50,9 +50,8 @@ def receive_sms():
     """
     app.logger.warning('TEXT: RECIEVED FROM: %s', request.values['From'])
 
-    app.logger.info(request.values)
-    with open('texts.txt', 'a') as fh:
-        fh.write('{}: {}\n\n'.format(datetime.now().isoformat(), str(dict(request.values.items()))))
+    # with open('texts.txt', 'a') as fh:
+    #     fh.write('{}: {}\n\n'.format(datetime.now().isoformat(), str(dict(request.values.items()))))
 
     # Populate a dictionary with sms data.
     keys = ['Body', 'From']
@@ -62,10 +61,12 @@ def receive_sms():
             return abort(400)
         sms_dictionary[key.lower()] = request.values[key]
 
-    # SAM: SMS keys are 'from', 'body', and are both strings
-    # receive_text(sms_dictionary['from'], sms_dictionary['body'])
+    app.logger.warning("TEXT: CREATED SMS DICT: %s", str(sms_dictionary))
 
-    return jsonify(sms_dictionary)
+    # SAM: SMS keys are 'from', 'body', and are both strings
+    receive_text(sms_dictionary['from'], sms_dictionary['body'])
+
+    # return jsonify(sms_dictionary)
 
 
 @app.route('/approve/<reqid>', methods=['GET'])
