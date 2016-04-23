@@ -1,5 +1,20 @@
 <!DOCTYPE html>
 <title>Chiron!</title>
 <link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">
+<div id="content">
+    <div id="messages">
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="row">
+                        <div class="alert alert-info" role="alert">{{ message }}</div>
+                    </div>
+                {% endfor %}
 
-{% block body %}{% endblock %}
+                <hr />
+            {% endif %}
+        {% endwith %}
+        </div>
+
+    {% block body %}{% endblock %}
+</div>
