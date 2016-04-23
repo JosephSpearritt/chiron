@@ -20,7 +20,7 @@ from flask.ext.login import login_required, login_user, logout_user, current_use
 from . import app
 from .app import login_manager
 from .models import *
-
+from .tanda import *
 
 @app.route('/')
 def index():
@@ -59,7 +59,7 @@ def receive_sms():
         sms_dictionary[key.lower()] = request.values[key]
 
     # SAM: SMS keys are 'from', 'body', and are both strings
-
+    receive_text(sms_dictionary['from'],sms_dictionary['body'])
     return jsonify(sms_dictionary)
 
 

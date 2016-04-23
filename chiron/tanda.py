@@ -3,7 +3,6 @@ import json
 from .oauth import *
 import re
 from chiron.models import *
-from flask_script import Manager
 import datetime
 
 
@@ -14,14 +13,14 @@ def receive_text(no, text):
     dtext = decipher_text(text)
     print(dtext)
     if dtext == 0:
-        send_how_to()
+        send_how_to(no)
         return
     user = find_employee(dtext['id'],no,dtext['name'],dtext['email'])
-    if user == 0:
-        send_how_to()
+    if not user :
+        send_how_to(no)
         return
-    register_illness(no, user)
-    return id
+    #register_illness(no, user)
+    return "worked"
 
 
 def check_not_email(email):
@@ -74,18 +73,15 @@ def confirm_employee(id, no, name, email, user):
     if str(user['email']) == email:
         count += 1
 
-    if count > 1:
+    if count >= 2:
         return True
 
     return False
 
 
 def find_employee(id, no, name, email):
-    if id == str(123977):
-        print("matched")
     #search what we may have
     for user in get_users():
-        print(user['id'])
 
         if str(user['name']) == name:
             if confirm_employee(id, no, name, email, user):
