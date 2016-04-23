@@ -1,4 +1,6 @@
+from .app import app
 from .oauth import authenticate, get, post
+from twilio.rest import TwilioRestClient
 import datetime
 import json
 
@@ -102,8 +104,14 @@ def tellManager(id, manager, available):
             manager
         ]
     }
-    data = post('sms/send', body, leaveToken)
-    print(data.content.decode('utf-8'))
+    # data = post('sms/send', body, leaveToken)
+
+    client = TwilioRestClient(app.config['TWILIO_SID'], app.config['TWILIO_TOKEN'])
+    client.messages.create(
+        to='+61422655246',
+        from_=app.config['TWILIO_NUMBER'],
+        body=msg,
+    )
 
 
 # Get list of leave types of someone
