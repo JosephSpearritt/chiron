@@ -8,5 +8,6 @@
 from chiron import app as application
 
 
-application.debug = True
-application.run()
+if __name__ == '__main__':
+    application.debug = True
+    application.run()
