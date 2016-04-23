@@ -23,6 +23,7 @@ def receive_text(ph_num, text):
     if not user:
         send_how_to(ph_num)
         return
+    user['reason'] = text_data['reason']
     register_illness(ph_num, user)
     send_recieved(ph_num)
     return "worked"
