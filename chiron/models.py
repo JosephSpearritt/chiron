@@ -1,6 +1,18 @@
-from .app import db
+"""
+
+    Models
+    ======
+
+    Database backed models of useful classes.
+
+"""
+
+
 from flask.ext.login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
+
+from .app import db
+
 
 class User(db.Model, UserMixin):
 
