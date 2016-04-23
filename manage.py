@@ -8,7 +8,7 @@
 """
 
 
-from chiron import app
+from chiron import app, db
 
 from flask_script import Manager
 
@@ -23,6 +23,12 @@ def run_debug():
     """
     app.run(debug=True)
 
+@manager.command
+def initdb():
+    """
+    Setup the database
+    """
+    db.create_all()
 
 if __name__ == '__main__':
     manager.run()

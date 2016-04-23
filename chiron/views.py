@@ -9,6 +9,7 @@
 from flask import render_template
 
 from . import app
+from .models import *
 
 
 @app.route('/')
