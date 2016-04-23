@@ -11,7 +11,6 @@ TANDA_TOKEN =  "6b14f827a74ba300a8929bba04ec282b632983b96c3b2228ec865f16b7977a2f
 
 def receive_text(no, text):
     dtext = decipher_text(text)
-    print(dtext)
     if dtext == 0:
         send_how_to(no)
         return
@@ -54,6 +53,11 @@ All has failed, ask them to send back info
 """
 def send_how_to(no):
     text = "Please text as follows. Name, ID, Email, Reason. Type 0 when you are not sure Example: Sam Brown 0 sam@sam.com I'm sick"
+    pass
+
+
+def send_received(no):
+    text = "Your message has been received and logged. We will get back to you ASAP with a response."
     pass
 
 
