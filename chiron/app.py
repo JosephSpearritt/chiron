@@ -37,7 +37,7 @@ def initialise_settings(application):
             fh_out.write('#TWILLIO_SID = "{}"\n')
             fh_out.write('#TWILLIO_TOKEN = "{}"\n')
 
-            fh_out.write('TANDA_TOKEN = #"Tanda OAuth token here!"\n')
+            fh_out.write('TANDA_TOKEN = "6b14f827a74ba300a8929bba04ec282b632983b96c3b2228ec865f16b7977a2f"\n')
 
             application.logger.warning('Created default config file, DO YOU NEED TWILIO CREDENTIALS?')
 
