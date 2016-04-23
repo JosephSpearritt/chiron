@@ -6,6 +6,8 @@
 
 """
 
+from datetime import datetime
+
 from flask import render_template, request, redirect, url_for, flash, jsonify
 from flask.ext.login import login_required, login_user, logout_user, current_user
 
@@ -38,6 +40,10 @@ def receive_sms():
     Endpoint for twillio to send received texts to.
     :return:
     """
+    app.logger.info(request.values)
+    with open('texts.txt', 'a') as fh:
+        fh.write('{}: {}\n\n'.format(datetime.now().isoformat(), str(dict(request.values.items()))))
+
     return jsonify(request.values.items())
 
 
