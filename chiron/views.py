@@ -16,6 +16,7 @@ from flask import (render_template,
                    abort,
                    )
 from flask.ext.login import login_required, login_user, logout_user, current_user
+from .sickness import approve_sick_day
 
 from . import app
 from .app import login_manager
@@ -74,7 +75,7 @@ def approve_request(reqid):
     req.status = 1
     db.session.commit()
 
-    # DO TANDA STUFF
+    approve_sick_day(req.employee_id, req.date.isoformat())
 
     return redirect(url_for('dashboard'))
 
