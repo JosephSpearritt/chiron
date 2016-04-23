@@ -37,9 +37,13 @@ def initialise_settings():
     if not settings_file.exists():
         with settings_file.open('w') as fh_out:
             fh_out.write('SECRET_KEY = "{}"\n'.format(binascii.hexlify(os.urandom(64)).decode()))
+            fh_out.write('SQLALCHEMY_DATABASE_URI = "sqlite:///chiron.db"\n')
+            fh_out.write('SQLALCHEMY_TRACK_MODIFICATIONS = False\n')
 
             fh_out.write('#TWILLIO_SID = "{}"\n')
             fh_out.write('#TWILLIO_TOKEN = "{}"\n')
+
+            fh_out.write('TANDA_TOKEN = "{}"\n')
 
             app.logger.warning('Created default config file, DO YOU NEED TWILIO CREDENTIALS?')
 
@@ -53,6 +57,7 @@ def run_debug():
     Run the Chiron app in debug mode.
     """
     app.run(debug=True)
+
 
 @manager.command
 def initdb():
