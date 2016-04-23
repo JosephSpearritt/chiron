@@ -3,7 +3,6 @@
 """
 
 import datetime
-from dateutil import parser
 import re
 
 from twilio.rest import TwilioRestClient
