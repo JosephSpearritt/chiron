@@ -36,7 +36,7 @@ def run():
     app.logger.handlers = []
 
     ch = logging.StreamHandler()
-    ch.level = 'DEBUG'
+    ch.setLevel('DEBUG')
     app.logger.addHandler(ch)
 
     from cherrypy import wsgiserver
