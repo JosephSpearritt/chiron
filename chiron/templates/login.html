@@ -1,13 +1,18 @@
 <!DOCTYPE html>
 {% extends "layout.html" %}
 {% block body %}
-    <div id="planetback">
+    <div>
         <h1>Login</h1>
         <form action="{{ url_for('login')}}" method="post">
-            <dt>Username:
-            <dd> <input class="form-control" type="text" name="username" />
-            <dt>Password:
-            <dd> <input class="form-control" type="password" name="password" />
+
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon1">Username</span>
+              <input type="text" class="form-control" placeholder="Username" name="username" aria-describedby="basic-addon1">
+            </div>
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon1">Password</span>
+              <input type="password" class="form-control" placeholder="Password" name="password" aria-describedby="basic-addon1">
+            </div>
             <dd> <input class="btn btn-default" type="submit" value="Login" />
             {% if next %}
                 <input type="hidden" name="next" value="{{ next }}">

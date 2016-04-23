@@ -1,18 +1,40 @@
 <!DOCTYPE html>
 <title>Chiron!</title>
-<!--<link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">-->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
-<div class="page">
-    <div class="navbar navbar-inverse">
-         <ul class="nav navbar-nav">
-            {% if current_user.is_authenticated %}
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">
+<div class="container">
+{#    <div class="navbar navbar-inverse">#}
+{#         <ul class="nav navbar-nav">#}
+{#            {% if current_user.is_authenticated %}#}
+{#                <li role="presentation"><a href="{{ url_for('logout') }}">Logout</a></li>#}
+{#            {% else %}#}
+{#                <li role="presentation"><a href="{{ url_for('login') }}">Login</a></li>#}
+{#            {% endif %}#}
+{#         </ul>#}
+{#    </div>#}
+<nav class="navbar navbar-inverse">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Chiron</a>
+          </div>
+          <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              {% if current_user.is_authenticated %}#}
                 <li role="presentation"><a href="{{ url_for('logout') }}">Logout</a></li>
             {% else %}
                 <li role="presentation"><a href="{{ url_for('login') }}">Login</a></li>
             {% endif %}
-         </ul>
-    </div>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
     <div class="container" id="content">
         <div id="messages">
                 {% with messages = get_flashed_messages() %}
