@@ -7,11 +7,13 @@
 
 """
 
-from chiron.models import *
-from flask_script import Manager
 import datetime
+import logging
+from flask_script import Manager
 
+from chiron.models import *
 from chiron import app, db
+
 
 manager = Manager(app)
 
@@ -30,6 +32,13 @@ def run():
     Run through a CherryPy Server.
     :return:
     """
+
+    app.logger.handlers = []
+
+    ch = logging.StreamHandler()
+    ch.level = 'DEBUG'
+    app.logger.addHandler(ch)
+
     from cherrypy import wsgiserver
     d = wsgiserver.WSGIPathInfoDispatcher({'/': app})
     server = wsgiserver.CherryPyWSGIServer(('0.0.0.0', 80), d)
