@@ -75,6 +75,22 @@ def send_how_to(ph_num):
         body=text,
     )
 
+def send_recieved(ph_num):
+    """
+    All has worked, send back success
+    """
+    text = (
+        "Your sick leave request has been successful. We are reviewing it now"
+    )
+
+    from twilio.rest import TwilioRestClient
+
+    client = TwilioRestClient(app.config['TWILIO_SID'], app.config['TWILIO_TOKEN'])
+    client.messages.create(
+        to=ph_num,
+        from_=app.config['TWILIO_NUMBER'],
+        body=text,
+    )
 
 def get_users():
     return get("users?show_wages=false", app.config['TANDA_TOKEN']).json()
